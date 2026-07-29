@@ -18,6 +18,9 @@ engine = create_engine('postgresql://kenyonnyangai@localhost:5432/healthcare_db'
 # write the dataframe to a new table
 df.to_sql('healthcare_dataset', engine, if_exists='replace', index=False)
 
-print("Done — 'patients' table created with updated Age Range") 
+print("Done — 'healthcare_dataset' table created with updated Age Range") 
+
+result = pd.read_sql('SELECT * FROM healthcare_dataset LIMIT 5', engine)
+print(result)
 
 
