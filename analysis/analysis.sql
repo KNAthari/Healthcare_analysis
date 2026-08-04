@@ -1,6 +1,6 @@
 --- Find the total number of patients ---
 SELECT COUNT(*) AS patient_count
-FROM healthcare_dataset
+FROM healthcare_dataset;
 
 --- What are the leading medical conditions? At what age range do they occur? And how do they appear by gender? ---
 SELECT "Age Range", "Gender", "Medical Condition", condition_count
@@ -15,6 +15,30 @@ FROM (
     GROUP BY "Age Range", "Gender", "Medical Condition"
 ) AS conditions_ranked_by_gender_and_age
 WHERE rc = 1
-ORDER BY "Age Range", "Gender"
+ORDER BY "Age Range", "Gender"; 
+
+--- What is the average billing amount by medical condition? And does it have any correlation with the insurance provider?
+
+SELECT "Medical Condition", ROUND(AVG("Billing Amount")::numeric, 2) AS avg_billing
+FROM healthcare_dataset
+GROUP BY "Medical Condition"
+ORDER BY avg_billing
+
+WITH stats AS (
+    SELECT
+        "Insurance Provider",
+        "Billing Amount",
+        AVG("Billing Amount") OVER (PARTITION BY "Insurance Provider") AS group_avg,
+        AVG("Billing Amount") OVER () AS grand_avg
+    FROM healthcare_dataset
+)
+
+SELECT 
+    ROUND(
+        (SUM(POWER(group_avg - grand_avg, 2)) / SUM(POWER("Billing Amount" - grand_avg, 2)))::numeric, 
+        4
+    ) AS eta_squared
+FROM stats;
+
 
 
