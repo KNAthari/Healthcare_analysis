@@ -9,7 +9,7 @@ To prepare for analysis, I, first exported the dataset on Google Sheets in order
     1. How many patients were enrolled?
     2. What are the leading medical conditions? At what age range do they occur? And how do they appear by gender?
     3. What is the average billing amount by medical condition? And does it have any correlation with the insurance provider?
-    4. Is the average billing amount falling, rising or staying flat year over year?
+    4. How did the average billing amounts for admitted patient differ each year?
     5. Has the average length of stay changed?
     6. What is the average age of patients enrolled?
 

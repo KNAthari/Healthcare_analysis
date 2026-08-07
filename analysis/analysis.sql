@@ -38,7 +38,22 @@ SELECT
         (SUM(POWER(group_avg - grand_avg, 2)) / SUM(POWER("Billing Amount" - grand_avg, 2)))::numeric, 
         4
     ) AS eta_squared
-FROM stats;
+FROM stats; 
+
+--- How did the average billing amounts for admitted patient differ each year? ---
+
+SELECT 
+year, 
+avg_billing_amount,
+COALESCE(avg_billing_amount - LAG(avg_billing_amount) OVER (ORDER BY year), 0) AS year_over_year_change
+FROM (
+    SELECT 
+    EXTRACT(YEAR FROM "Date of Admission") AS year,
+    ROUND(AVG("Billing Amount")::numeric, 2) AS avg_billing_amount
+    FROM healthcare_dataset
+    GROUP BY year
+) AS calc_avg_billing
+ORDER BY year ASC
 
 
 
