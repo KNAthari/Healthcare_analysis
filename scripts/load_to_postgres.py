@@ -9,6 +9,10 @@ DATA_PATH = BASE_DIR.parent / "data" / "healthcare_dataset_processed.csv"
 
 df = pd.read_csv(DATA_PATH)
 
+#Convert data column types when loading to sql
+df["Date of Admission"] = pd.to_datetime(df["Date of Admission"])
+df["Discharge Date"] = pd.to_datetime(df["Discharge Date"])
+
 # Rebuild Age Range with clinical brackets
 bins = [12, 17, 35, 55, 65, 89]
 labels = ['Adolescent (12 - 17)', 'Young Adult (18 - 35)', 'Adult (36 - 55)', 'Middle-Aged (56 - 65)', 'Senior (66+)']
@@ -23,6 +27,9 @@ db_name = os.getenv("DB_NAME")
 
 # Connect to postgres sql
 engine = create_engine(f'postgresql://{db_user}@{db_host}:{db_port}/{db_name}')
+
+# Add a primary_key to table
+df.insert(0, "patient_id", range(1, len(df) + 1))
 
 # write the dataframe to a new table
 df.to_sql('healthcare_dataset', engine, if_exists='replace', index=False)
