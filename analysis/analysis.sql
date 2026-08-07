@@ -1,5 +1,5 @@
 --- Find the total number of patients ---
-SELECT COUNT(*) AS patient_count
+/***SELECT COUNT(*) AS patient_count
 FROM healthcare_dataset;
 
 --- What are the leading medical conditions? At what age range do they occur? And how do they appear by gender? ---
@@ -53,7 +53,27 @@ FROM (
     FROM healthcare_dataset
     GROUP BY year
 ) AS calc_avg_billing
-ORDER BY year ASC
+ORDER BY year ASC ***/
+
+--- Has the average length of stay changed? ---
+
+WITH calc_length_of_stay AS (
+    SELECT 
+        "Date of Admission",
+        "Discharge Date",
+        "Discharge Date" - "Date of Admission" AS length_of_stay
+    FROM healthcare_dataset
+)
+
+SELECT
+    EXTRACT(YEAR FROM "Date of Admission") AS year,
+    ROUND(AVG(length_of_stay)::numeric,2) AS avg_length_of_stay,
+    COALESCE(
+        ROUND(AVG(length_of_stay)::numeric, 2) - LAG(ROUND(AVG(length_of_stay)::numeric, 2)) OVER (ORDER BY EXTRACT(YEAR FROM "Date of Admission")), 
+        0) AS year_over_year_change
+FROM calc_length_of_stay
+GROUP BY year
+ORDER BY year
 
 
 
