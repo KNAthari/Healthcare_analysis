@@ -22,7 +22,7 @@ ORDER BY "Age Range", "Gender";
 SELECT "Medical Condition", ROUND(AVG("Billing Amount")::numeric, 2) AS avg_billing
 FROM healthcare_dataset
 GROUP BY "Medical Condition"
-ORDER BY avg_billing
+ORDER BY avg_billing;
 
 WITH stats AS (
     SELECT
@@ -38,7 +38,7 @@ SELECT
         (SUM(POWER(group_avg - grand_avg, 2)) / SUM(POWER("Billing Amount" - grand_avg, 2)))::numeric, 
         4
     ) AS eta_squared
-FROM stats; 
+FROM stats;
 
 --- How did the average billing amounts for admitted patient differ each year? ---
 
@@ -53,7 +53,7 @@ FROM (
     FROM healthcare_dataset
     GROUP BY year
 ) AS calc_avg_billing
-ORDER BY year ASC
+ORDER BY year ASC;
 
 --- Has the average length of stay changed? ---
 
@@ -73,7 +73,7 @@ SELECT
         0) AS year_over_year_change
 FROM calc_length_of_stay
 GROUP BY year
-ORDER BY year
+ORDER BY year;
 
 --- What is the average age of patients enrolled? ---
 
@@ -81,7 +81,7 @@ SELECT
     ROUND(AVG("Age")::numeric, 2) AS avg_age,
     MAX("Age") AS oldest_patient,
     MIN("Age") AS youngest_patient
-FROM healthcare_dataset
+FROM healthcare_dataset;
 
 
 
