@@ -10,8 +10,8 @@ DATA_PATH = BASE_DIR.parent / "data" / "healthcare_dataset_processed.csv"
 df = pd.read_csv(DATA_PATH)
 
 #Convert data column types when loading to sql
-df["Date of Admission"] = pd.to_datetime(df["Date of Admission"])
-df["Discharge Date"] = pd.to_datetime(df["Discharge Date"])
+df["Date of Admission"] = pd.to_datetime(df["Date of Admission"]).dt.date
+df["Discharge Date"] = pd.to_datetime(df["Discharge Date"]).dt.date
 
 # Rebuild Age Range with clinical brackets
 bins = [12, 17, 35, 55, 65, 89]
