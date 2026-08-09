@@ -21,6 +21,7 @@ ORDER BY "Age Range", "Gender";
 
 SELECT "Medical Condition", ROUND(AVG("Billing Amount")::numeric, 2) AS avg_billing
 FROM healthcare_dataset
+WHERE "Billing Amount" >= 0
 GROUP BY "Medical Condition"
 ORDER BY avg_billing;
 
@@ -31,6 +32,7 @@ WITH stats AS (
         AVG("Billing Amount") OVER (PARTITION BY "Insurance Provider") AS group_avg,
         AVG("Billing Amount") OVER () AS grand_avg
     FROM healthcare_dataset
+    WHERE "Billing Amount" >= 0
 )
 
 SELECT 
