@@ -2,7 +2,7 @@
 SELECT COUNT(*) AS patient_count
 FROM healthcare_dataset;
 
---- What are the leading medical conditions? At what age range do they occur? And how do they appear by gender? ---
+--- What is the most common medical condition for each combination of age group and gender? ---
 SELECT "Age Range", "Gender", "Medical Condition", condition_count
 FROM (
     SELECT 
@@ -17,7 +17,7 @@ FROM (
 WHERE rc = 1
 ORDER BY "Age Range", "Gender"; 
 
---- What is the average billing amount by medical condition? And does it have any correlation with the insurance provider?
+--- What is the average billing amount by medical condition? And does it have any correlation with the insurance provider? ---
 
 SELECT "Medical Condition", ROUND(AVG("Billing Amount")::numeric, 2) AS avg_billing
 FROM healthcare_dataset
@@ -57,7 +57,7 @@ FROM (
 ) AS calc_avg_billing
 ORDER BY year ASC;
 
---- Has the average length of stay changed? ---
+--- How has the average patient length of stay changed each year, and how much has it increased or decreased compared with the previous year? ---
 
 WITH calc_length_of_stay AS (
     SELECT 
@@ -77,7 +77,7 @@ FROM calc_length_of_stay
 GROUP BY year
 ORDER BY year;
 
---- What is the average age of patients enrolled? ---
+--- What is the overall age profile of the hospitals' patient population? ---
 
 SELECT
     ROUND(AVG("Age")::numeric, 2) AS avg_age,
