@@ -1,9 +1,14 @@
 --- Find the total number of patients ---
-SELECT COUNT(*) AS patient_count
+SELECT 
+    COUNT(*) AS patient_count
 FROM healthcare_dataset;
 
 --- What is the most common medical condition for each combination of age group and gender? ---
-SELECT "Age Range", "Gender", "Medical Condition", condition_count
+SELECT 
+    "Age Range", 
+    "Gender", 
+    "Medical Condition", 
+    condition_count
 FROM (
     SELECT 
         "Age Range",
@@ -19,7 +24,9 @@ ORDER BY "Age Range", "Gender";
 
 --- What is the average billing amount by medical condition? And does it have any correlation with the insurance provider? ---
 
-SELECT "Medical Condition", ROUND(AVG("Billing Amount")::numeric, 2) AS avg_billing
+SELECT 
+    "Medical Condition", 
+    ROUND(AVG("Billing Amount")::numeric, 2) AS avg_billing
 FROM healthcare_dataset
 WHERE "Billing Amount" >= 0
 GROUP BY "Medical Condition"
@@ -45,13 +52,13 @@ FROM stats;
 --- How did the average billing amounts for admitted patient differ each year? ---
 
 SELECT 
-year, 
-avg_billing_amount,
-COALESCE(avg_billing_amount - LAG(avg_billing_amount) OVER (ORDER BY year), 0) AS year_over_year_change
+    year, 
+    avg_billing_amount,
+    COALESCE(avg_billing_amount - LAG(avg_billing_amount) OVER (ORDER BY year), 0) AS year_over_year_change
 FROM (
     SELECT 
-    EXTRACT(YEAR FROM "Date of Admission") AS year,
-    ROUND(AVG("Billing Amount")::numeric, 2) AS avg_billing_amount
+        EXTRACT(YEAR FROM "Date of Admission") AS year,
+        ROUND(AVG("Billing Amount")::numeric, 2) AS avg_billing_amount
     FROM healthcare_dataset
     GROUP BY year
 ) AS calc_avg_billing
@@ -80,10 +87,12 @@ ORDER BY year;
 --- What is the overall age profile of the hospitals' patient population? ---
 
 SELECT
-    ROUND(AVG("Age")::numeric, 2) AS avg_age,
-    MAX("Age") AS oldest_patient,
-    MIN("Age") AS youngest_patient
-FROM healthcare_dataset;
+    "Age Range",
+    COUNT(*) AS patient_count,
+    ROUND(AVG("Age")::numeric, 2) AS avg_age
+FROM healthcare_dataset
+GROUP BY "Age Range"
+ORDER BY "Age Range";
 
 
 
