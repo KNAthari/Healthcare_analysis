@@ -24,19 +24,20 @@ This dataset was exported from Kaggle and consists of about 55,500 records and 1
 
 ## Project Structure
 ```
+├── analysis/
+│   └── analysis.sql
 ├── data/
-│   └── healthcare_dataset_processed.csv
+│   ├── healthcare_dataset_processed.csv
+│   └── healthcare_dataset.csv
 ├── notebooks/
 │   └── explore.ipynb
 ├── scripts/
-│   ├── load_to_postgres.py
-│   └── dedup_patients.sql
-├── analysis/
-│   └── analysis.sql
+│   ├── dedup_healthcare.sql
+│   └── load_to_postgres.py
 ├── visualizations/
 ├── .env.example
-├── requirements.txt
-└── README.md
+├── README.md
+└── requirements.txt
 ```
 
 ## Data Cleaning
@@ -94,8 +95,7 @@ first identified via `df.describe()`.
 -
 
 ## Dashboard
-<!-- Link to Tableau Public once published -->
-[View the interactive dashboard on Tableau Public](#)
+[View the interactive dashboard on Tableau Public](https://public.tableau.com/app/profile/kenyon.nyangai/viz/Healthcare_DatasetDashboard/Dashboard1)
 
 ## Tools Used
 - PostgreSQL
