@@ -32,9 +32,10 @@ This dataset was exported from Kaggle and consists of about 55,500 records and 1
 ├── notebooks/
 │   └── explore.ipynb
 ├── scripts/
-│   ├── dedup_healthcare.sql
-│   └── load_to_postgres.py
-├── visualizations/
+│   ├── load_to_postgres.py
+│   └── dedup_patients.sql
+├── analysis/
+│   └── analysis.sql
 ├── .env.example
 ├── README.md
 └── requirements.txt
@@ -89,12 +90,15 @@ first identified via `df.describe()`.
 6. What is the overall age profile of the hospitals' patient population?
 
 ## Key Findings
-<!-- Fill in after Tableau is done - 3-5 bullet takeaways -->
--
--
--
+- Insurance provider has no meaningful relationship to billing amount (η² ≈ 0.000034) — average billing is nearly identical across all five providers (~$25,400–$25,600).
+- Medical condition also shows little variation in billing amount — box plots across all six conditions and five providers are nearly indistinguishable in median and spread.
+- The leading medical condition varies slightly by gender within most age groups (e.g. Adult: Arthritis leads for Female, Diabetes for Male), though margins between the top conditions are narrow, not decisive.
+- Patients aged 13-17 make up a very small share of the dataset (116 of 54,966, ~0.2%), a sharp drop-off compared to every other age bracket.
+- Average billing amount and average length of stay have both stayed essentially flat from 2019 through 2024 (2024 reflects partial-year data, through June 7).
+- The average patient age is 51.5, with a wide range from 13 to 89.
 
 ## Dashboard
+<!-- Link to Tableau Public once published -->
 [View the interactive dashboard on Tableau Public](https://public.tableau.com/app/profile/kenyon.nyangai/viz/Healthcare_DatasetDashboard/Dashboard1)
 
 ## Tools Used
