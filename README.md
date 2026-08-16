@@ -98,7 +98,6 @@ first identified via `df.describe()`.
 - The average patient age is 51.5, with a wide range from 13 to 89.
 
 ## Dashboard
-<!-- Link to Tableau Public once published -->
 [View the interactive dashboard on Tableau Public](https://public.tableau.com/app/profile/kenyon.nyangai/viz/Healthcare_DatasetDashboard/Dashboard1)
 
 ## Tools Used
